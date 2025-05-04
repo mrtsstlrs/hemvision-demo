@@ -30,13 +30,13 @@
 1. Клонируйте репозиторий:
 
    ```bash
-   git clone https://github.com/<ваш-пользователь>/hemvision.git
+   git clone https://github.com/pumpsulp/hemvision.git
    cd hemvision
    ```
 2. Запустите контейнеры:
 
    ```bash
-   docker-compose up
+   docker compose up
    ```
 3. Перейдите:
 
@@ -74,7 +74,7 @@ curl -X POST http://localhost:8000/api/detect \
 * Автоматический предпросмотр изображения или видео
 * Сине-голубая цветовая схема
 
-Переменные окружения (в `docker-compose`):
+Переменные окружения (в `docker-compose.yaml`):
 
 ```yaml
 frontend:
