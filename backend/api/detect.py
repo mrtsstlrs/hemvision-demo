@@ -18,14 +18,10 @@ async def detect(
     settings = Depends(get_settings),
     inference_service: InferenceService = Depends(get_inference_service),
 ):
-    """
-    Загрузка изображения или видео, возвращает аннотированный файл.
-    """
     contents = await file.read()
     max_bytes = settings.max_upload_size_mb * 1024 * 1024
     if len(contents) > max_bytes:
-        logger.warning(f"Upload too large: {len(contents)} bytes")
-        raise HTTPException(status_code=413, detail="File too large")
+        raise HTTPException(413, "File too large")
 
     suffix = os.path.splitext(file.filename)[1].lower()
     with NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
@@ -34,21 +30,22 @@ async def detect(
 
     try:
         if suffix in ['.jpg', '.jpeg', '.png', '.bmp', '.tiff']:
-            # предсказание изображения, возвращаем JPEG-байты
-            out_bytes = inference_service.predict_image(tmp_path)
-            return Response(content=out_bytes, media_type='image/jpeg')
+            img_bytes = inference_service.predict_image(tmp_path)
+            return Response(content=img_bytes, media_type='image/jpeg')
+
         elif suffix in ['.mp4', '.avi', '.mkv']:
-            # предсказание видео, возвращаем готовый файл
-            processed = inference_service.predict_video(tmp_path)
-            if not processed:
-                raise HTTPException(status_code=500, detail="Video processing failed")
+            video_path = inference_service.predict_video(tmp_path)
+            filename = os.path.basename(video_path)
+            headers = {"Content-Disposition": f'inline; filename="{filename}"'}
+            # Добавляем Accept-Ranges, чтобы видео могло seek’иться
             return FileResponse(
-                path=processed,
+                path=video_path,
                 media_type='video/mp4',
-                filename=os.path.basename(processed)
+                headers={**headers, "Accept-Ranges": "bytes"}
             )
+
         else:
-            raise HTTPException(status_code=415, detail="Unsupported file type")
+            raise HTTPException(415, "Unsupported file type")
     finally:
         try:
             os.unlink(tmp_path)
