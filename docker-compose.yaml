@@ -1,0 +1,12 @@
+name: hemvision
+
+services:
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/:/app/
+      - ./model/rt-detr-x.pt:/app/last.pt
+    command: python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
