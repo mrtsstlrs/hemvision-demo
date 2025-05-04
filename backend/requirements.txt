@@ -1,5 +1,8 @@
 fastapi
 uvicorn[standard]
+# Указываем индекс с CPU-whl и версию с +cpu
+--find-links https://download.pytorch.org/whl/cpu/torch_stable.html
+torch==2.3.1+cpu
 ultralytics
 opencv-python-headless
 slowapi
