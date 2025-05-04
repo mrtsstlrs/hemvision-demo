@@ -1,23 +1,30 @@
+// frontend/src/components/PreviewCanvas.jsx
+
 import React from 'react';
 
 export default function PreviewCanvas({ blob }) {
   const url = URL.createObjectURL(blob);
   const isVideo = blob.type.startsWith('video/');
 
-  if (isVideo) {
-    return (
-      <div className="mt-6 text-center">
-        <video controls className="max-w-full rounded-lg shadow">
+  return (
+    <div className="result-container">
+      <h2 className="result-title">Результат</h2>
+      {isVideo ? (
+        <video
+          controls
+          preload="metadata"
+          className="result-media"
+        >
           <source src={url} type={blob.type} />
           Ваш браузер не поддерживает видео.
         </video>
-      </div>
-    );
-  } else {
-    return (
-      <div className="mt-6 text-center">
-        <img src={url} alt="Result" className="max-w-full rounded-lg shadow" />
-      </div>
-    );
-  }
+      ) : (
+        <img
+          src={url}
+          alt="Результат"
+          className="result-media"
+        />
+      )}
+    </div>
+  );
 }
