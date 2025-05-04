@@ -6,7 +6,7 @@ from fastapi import Depends
 from services.inference import InferenceService
 
 class Settings:
-    model_path: str = 'last.pt'
+    model_path: str = 'model/rt-detr-x.pt'
     conf_threshold: float = 0.1
     imgsz: int = 640
     max_upload_size_mb: int = 100
