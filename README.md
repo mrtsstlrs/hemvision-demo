@@ -1,4 +1,4 @@
-# Hemvision
+# Hemvision Demo
 
 <img src="frontend/public/logo.png" alt="Hem Vision Logo" width="150"/>
 
