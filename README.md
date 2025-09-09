@@ -1,4 +1,4 @@
-# Hem Vision
+# DEMO версия проекта Hemvision для тестирования распознавания с удобным интерфейсом
 
 <img src="frontend/public/logo.png" alt="Hem Vision Logo" width="150"/>
 
