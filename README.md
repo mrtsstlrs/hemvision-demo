@@ -125,7 +125,7 @@ frontend:
 
 The project is distributed under the [MIT](LICENSE) license.
 
-# Гемвижн Демо
+# Hemvision Демо
 
 <img src="frontend/public/logo.png" alt="Hem Vision Logo" width="150"/>
 
